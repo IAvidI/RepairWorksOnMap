@@ -18,10 +18,12 @@ export default function App() {
     if (isLoggedIn) {
       setIsLoggedIn(false);
       setLogInClicked(false);
-      setActiveTab('login');
+      handleLoginClick('login');
+      // setActiveTab('login');
     } else {
       setIsLoggedIn(true);
-      setActiveTab('posts');
+      handleLoginClick('posts');
+      // setActiveTab('posts');
     }
   };
 
@@ -46,6 +48,10 @@ export default function App() {
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   }
+
+  useEffect(() => {
+    console.log("Active tab changed:", activeTab);
+  }, [activeTab]);
 
   const [areas, setAreas] = useState([]);
 

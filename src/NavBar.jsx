@@ -4,7 +4,7 @@ import { faPlus, faSearch, faBell, faCog } from "@fortawesome/free-solid-svg-ico
 
 import "./NavBar.css";
 
-const NavBar = ({isLoggedIn, handleLogin, handleLoginClick}) => {
+const NavBar = ({isLoggedIn, handleLogin, handleLoginClick, handleTabClick}) => {
   const currentDate = new Date().toLocaleDateString();
 
   return (
@@ -22,10 +22,14 @@ const NavBar = ({isLoggedIn, handleLogin, handleLoginClick}) => {
       <div className="navbar-icons">
         {isLoggedIn ? (
           <>
-          <FontAwesomeIcon icon={faPlus} className="icon1" />
-          <FontAwesomeIcon icon={faSearch} className="icon2" />
-          <FontAwesomeIcon icon={faBell} className="icon3" />
-          <FontAwesomeIcon icon={faCog} className="icon4" />
+          <FontAwesomeIcon icon={faPlus} className="icon1" 
+            onClick={() => handleTabClick('posts')}/>
+          <FontAwesomeIcon icon={faSearch} className="icon2" 
+            onClick={() => handleTabClick('login')}/>
+          <FontAwesomeIcon icon={faBell} className="icon3" 
+            onClick={() => handleTabClick('posts')}/>
+          <FontAwesomeIcon icon={faCog} className="icon4" 
+            onClick={() => handleTabClick('posts')}/>
           <div className="login" onClick={handleLogin} >
             Logout
           </div>

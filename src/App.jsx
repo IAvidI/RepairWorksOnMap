@@ -18,11 +18,11 @@ export default function App() {
     if (isLoggedIn) {
       setIsLoggedIn(false);
       setLogInClicked(false);
-      handleLoginClick('login');
+      handleTabClick('login');
       // setActiveTab('login');
     } else {
       setIsLoggedIn(true);
-      handleLoginClick('posts');
+      handleTabClick('posts');
       // setActiveTab('posts');
     }
   };
@@ -61,6 +61,7 @@ export default function App() {
         isLoggedIn={isLoggedIn} 
         handleLogin={handleLogin}
         handleLoginClick={handleLoginClick}
+        handleTabClick={handleTabClick}
       />
 
       {logInClicked && <Tabs

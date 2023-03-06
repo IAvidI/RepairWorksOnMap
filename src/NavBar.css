@@ -18,11 +18,15 @@
   width: auto;
 }
 
+.navbar-logo {
+  display: flex;
+  flex-direction: row;
+}
+
 .navbar-title {
   display: flex;
   align-items: center;
-  height: 100%;
-  margin-left: -100px;
+  margin-left: 10px;
 }
 
 .navbar-title h1 {
@@ -31,6 +35,7 @@
 }
 
 .navbar-middle {
+  flex-grow: 0;
   font-size: 0.8rem;
 }
 

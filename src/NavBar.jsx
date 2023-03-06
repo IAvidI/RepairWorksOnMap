@@ -11,10 +11,11 @@ const NavBar = ({isLoggedIn, handleLogin, handleLoginClick, handleTabClick}) => 
     <nav className="navbar">
       <div className="navbar-logo">
         <img src="/favicon.svg" alt="Logo" className="logo" />
+        <div className="navbar-title">
+          <h1>Railway Repair Manager</h1>
+        </div>
       </div>
-      <div className="navbar-title">
-        <h1>Railway Repair Manager</h1>
-      </div>
+      
       <div className="navbar-middle">
         <p>{currentDate}</p>
       </div>

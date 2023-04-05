@@ -39,6 +39,7 @@ const MapComponent = ({ areas, setAreas, isLoggedIn }) => {
 
   // const [areas, setAreas] = useState([]);
   const [useMarkers, setUseMarkers] = useState(false); // state to track whether to use markers or polygons
+  
 
   function HideShowMarkers() {
     const map = useMap();
@@ -55,6 +56,14 @@ const MapComponent = ({ areas, setAreas, isLoggedIn }) => {
         }
       },
     });
+
+    const handleDeleteLayer = (layerId) => {
+      const layer = mapRef.current?.getLayer(layerId);
+      if (layer) {
+        mapRef.current.removeLayer(layer);
+      }
+    };
+    
     return null;
   }
 
@@ -80,7 +89,7 @@ const MapComponent = ({ areas, setAreas, isLoggedIn }) => {
 
       setAreas((layers) => [
         ...layers,
-        { id: _leaflet_id, latlngs: layer.getLatLngs()[0], center: center, properties: properties },
+        { id: _leaflet_id, key: _leaflet_id, latlngs: layer.getLatLngs()[0], center: center, properties: properties },
       ]);
     }
   };
@@ -101,38 +110,17 @@ const MapComponent = ({ areas, setAreas, isLoggedIn }) => {
       );
     });
   };
-
-  {/*
-  $(document).ready(function() {
-    // Get the edit button
-    // const editButton = document.querySelector('.leaflet-draw-edit-edit');
-    const editButton = $('.leaflet-draw-edit-edit');
   
-    // Add a click event listener to the edit button
-    editButton.addEventListener('click', () => {
-      // Check if the user is logged in
-      if (!isLoggedIn) {
-        // Disable the edit controls
-        const drawControl = L.Control.Draw.getInstance(map);
-        drawControl.setDrawingOptions({
-          edit: false
-        });
-  
-        // Show an alert
-        alert('You need to be logged in to use this feature!');
-      }
-    });
-  });
-  */}
-
-
   const _onDeleted = (e) => {
     console.log(e);
     const {
       layers: { _layers },
     } = e;
 
-    Object.values(_layers).map(({ _leaflet_id }) => {
+    console.log(_layers);
+
+    Object.values(_layers).map(({ _leaflet_id, options: { areaId } }) => {
+      setAreas((layers) => layers.filter((l) => l.id !== areaId));
       setAreas((layers) => layers.filter((l) => l.id !== _leaflet_id));
     });
   };
@@ -158,7 +146,7 @@ const MapComponent = ({ areas, setAreas, isLoggedIn }) => {
           <TileLayer
             url="https://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png"
             attribution={attribution}
-            maxZoom={100}
+            maxZoom={21}
           />
         </LayersControl.BaseLayer>
         <HideShowMarkers></HideShowMarkers>
@@ -166,7 +154,7 @@ const MapComponent = ({ areas, setAreas, isLoggedIn }) => {
           <FeatureGroup>
             {areas.map((area) => (
               useMarkers ? (
-                <Marker key={area.id} position={area.center} removable={false}>
+                <Marker key={area.id} position={area.center} areaId={area.id} removable={false}>
                   <Popup>
                     <div>
                       <p>Creation Date: {area.properties.creationDate}</p>
@@ -175,8 +163,7 @@ const MapComponent = ({ areas, setAreas, isLoggedIn }) => {
                       <p>Tag: {area.properties.tag}</p>
                     </div>
                   </Popup>
-                </Marker> 
-                
+                </Marker>
               ) : (
                 <></>
               )
@@ -184,7 +171,7 @@ const MapComponent = ({ areas, setAreas, isLoggedIn }) => {
             {isLoggedIn && <EditControl
               position="bottomleft"
               onCreated={_onCreated}
-              onDeleted={_onDeleted}
+              onDeleted={(e) => _onDeleted(e)}
               onEdited={_onEdited}
               draw={{
                 rectangle: false,
@@ -192,10 +179,12 @@ const MapComponent = ({ areas, setAreas, isLoggedIn }) => {
                 circlemarker: false,
                 marker: false,
                 polyline: false,
+                polygon: {
+                  showArea: false,
+                }
               }}
-            />}
-            (isLoggedIn ? (<></>) : (<></>))
-            
+            />
+            }
           </FeatureGroup>
         </LayersControl.Overlay>
       </LayersControl>

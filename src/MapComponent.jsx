@@ -89,7 +89,12 @@ const MapComponent = ({ areas, setAreas, isLoggedIn }) => {
 
       setAreas((layers) => [
         ...layers,
-        { id: _leaflet_id, key: _leaflet_id, latlngs: layer.getLatLngs()[0], center: center, properties: properties },
+        { id: _leaflet_id, 
+         key: _leaflet_id, 
+         latlngs: layer.getLatLngs()[0], 
+         center: center, 
+         properties: properties, 
+         editing: false },
       ]);
     }
   };

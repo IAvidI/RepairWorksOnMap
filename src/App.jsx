@@ -68,6 +68,7 @@ export default function App() {
                           polygons={areas}
                           activeTab={activeTab}
                           handleLogin={handleLogin}
+                          setPolygons={setAreas}
                         />
       }
       

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState } from "react";
 
 import "./App.css";
 
@@ -39,8 +40,44 @@ const Posts = ({ cards, setCards }) => {
     });
   };
 
+  const [sortOption, setSortOption] = useState(null);
+
+  const handleSort = (option) => {
+    // Set the sorting option in state
+    setSortOption(option);
+  };
+
+  const sortCards = (option) => {
+    return cards.sort((a, b) => {
+      let aValue, bValue;
+      switch (option) {
+        case "creationDate":
+          aValue = new Date(a.properties.creationDate);
+          bValue = new Date(b.properties.creationDate);
+          break;
+        case "expectedFinishDate":
+          aValue = new Date(a.properties.expectedFinishDate);
+          bValue = new Date(b.properties.expectedFinishDate);
+          break;
+        case "tag":
+          aValue = b.properties.tag;
+          bValue = a.properties.tag;
+          break;
+        default:
+          break;
+      }
+      if (aValue < bValue) return -1;
+      if (aValue > bValue) return 1;
+      return 0;
+    });
+  };
+
   const renderCards = () => {
-    return cards.map((card) => {
+    let sortedCards = [...cards];
+    if (sortOption) {
+      sortedCards = sortCards(sortOption);
+    }
+    return sortedCards.map((card) => {
       const {
         id,
         latlngs,
@@ -55,26 +92,42 @@ const Posts = ({ cards, setCards }) => {
       } = card;
       return (
         <div key={id} className="card">
-          <h3>Card ID: {id}</h3>
+          <h3>Area ID: {id}</h3>
           {editing ? (
             <div>
-              <input
-                type="text"
-                value={responsiblePerson}
-                onChange={(e) =>
-                  handlePropertyChange(id, "responsiblePerson", e.target.value)
-                }
-              />
-              <input
-                type="text"
-                value={expectedFinishDate}
-                onChange={(e) =>
-                  handlePropertyChange(id, "expectedFinishDate", e.target.value)
-                }
-              />
-              <button
-                onClick={() => handleSave(id, { responsiblePerson, expectedFinishDate })}
-              >
+              <p>Creation Date: {creationDate}</p>
+              <p>
+                Expected Finish Date:{" "}
+                <input
+                  type="text"
+                  value={expectedFinishDate}
+                  onChange={(e) =>
+                    handlePropertyChange(id, "expectedFinishDate", e.target.value)
+                  }
+                />
+              </p>
+              <p>
+                Responsible Person:{" "}
+                <input
+                  type="text"
+                  value={responsiblePerson}
+                  onChange={(e) =>
+                    handlePropertyChange(id, "responsiblePerson", e.target.value)
+                  }
+                />
+              </p>
+              <p>
+                Tag:{" "}
+                <input
+                  type="text"
+                  value={tag}
+                  onChange={(e) =>
+                    handlePropertyChange(id, "tag", e.target.value)
+                  }
+                />
+
+              </p>
+              <button onClick={() => handleSave(id, { responsiblePerson, expectedFinishDate, tag })}>
                 Save
               </button>
             </div>
@@ -94,7 +147,18 @@ const Posts = ({ cards, setCards }) => {
 
   return (
     <div>
-      <h1>Card List</h1>
+      <h1>Areas List</h1>
+      <div>
+        <h2>Sort by:</h2>
+        <button onClick={() => handleSort("creationDate")}>
+          Creation Date
+        </button>
+        <button onClick={() => handleSort("expectedFinishDate")}>
+          Expected Finish Date
+        </button>
+        <button onClick={() => handleSort("tag")}>Tag</button>
+        <button onClick={() => setSortOption(null)}>Clear</button>
+      </div>
       {renderCards()}
     </div>
   );

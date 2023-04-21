@@ -18,7 +18,7 @@ import "leaflet/dist/leaflet.css";
 import { EditControl } from "react-leaflet-draw";
 import "leaflet-draw/dist/leaflet.draw.css";
 
-import $ from 'jquery';
+import $ from "jquery";
 
 import "./App.css";
 
@@ -26,8 +26,6 @@ import CurrentLocation from "./CurrentLocation";
 import ResetViewControl from "@20tab/react-leaflet-resetview";
 
 const position = [48.0196, 66.9237]; // latitude and longitude of Kazakhstan
-
-
 
 const MapComponent = ({ areas, setAreas, isLoggedIn }) => {
   const attribution = `
@@ -39,7 +37,6 @@ const MapComponent = ({ areas, setAreas, isLoggedIn }) => {
 
   // const [areas, setAreas] = useState([]);
   const [useMarkers, setUseMarkers] = useState(false); // state to track whether to use markers or polygons
-  
 
   function HideShowMarkers() {
     const map = useMap();
@@ -49,8 +46,9 @@ const MapComponent = ({ areas, setAreas, isLoggedIn }) => {
     useMapEvents({
       zoomend: () => {
         const zoom = map.getZoom();
-        console.log('map zoom:', zoom);
-        if (zoom !== currentZoom.current) { // only update state if zoom level has changed
+        console.log("map zoom:", zoom);
+        if (zoom !== currentZoom.current) {
+          // only update state if zoom level has changed
           currentZoom.current = zoom; // update ref with new zoom level
           setUseMarkers(zoom < 13); // set useMarkers based on zoom level
         }
@@ -63,7 +61,7 @@ const MapComponent = ({ areas, setAreas, isLoggedIn }) => {
         mapRef.current.removeLayer(layer);
       }
     };
-    
+
     return null;
   }
 
@@ -89,12 +87,14 @@ const MapComponent = ({ areas, setAreas, isLoggedIn }) => {
 
       setAreas((layers) => [
         ...layers,
-        { id: _leaflet_id, 
-         key: _leaflet_id, 
-         latlngs: layer.getLatLngs()[0], 
-         center: center, 
-         properties: properties, 
-         editing: false },
+        {
+          id: _leaflet_id,
+          key: _leaflet_id,
+          latlngs: layer.getLatLngs()[0],
+          center: center,
+          properties: properties,
+          editing: false,
+        },
       ]);
     }
   };
@@ -115,7 +115,7 @@ const MapComponent = ({ areas, setAreas, isLoggedIn }) => {
       );
     });
   };
-  
+
   const _onDeleted = (e) => {
     console.log(e);
     const {
@@ -157,14 +157,24 @@ const MapComponent = ({ areas, setAreas, isLoggedIn }) => {
         <HideShowMarkers></HideShowMarkers>
         <LayersControl.Overlay name="Areas" checked>
           <FeatureGroup>
-            {areas.map((area) => (
+            {areas.map((area) =>
               useMarkers ? (
-                <Marker key={area.id} position={area.center} areaId={area.id} removable={false}>
+                <Marker
+                  key={area.id}
+                  position={area.center}
+                  areaId={area.id}
+                  removable={false}
+                >
                   <Popup>
                     <div>
                       <p>Creation Date: {area.properties.creationDate}</p>
-                      <p>Expected Finish Date: {area.properties.expectedFinishDate}</p>
-                      <p>Responsible Person: {area.properties.responsiblePerson}</p>
+                      <p>
+                        Expected Finish Date:{" "}
+                        {area.properties.expectedFinishDate}
+                      </p>
+                      <p>
+                        Responsible Person: {area.properties.responsiblePerson}
+                      </p>
                       <p>Tag: {area.properties.tag}</p>
                     </div>
                   </Popup>
@@ -172,31 +182,31 @@ const MapComponent = ({ areas, setAreas, isLoggedIn }) => {
               ) : (
                 <></>
               )
-            ))}
-            {isLoggedIn && <EditControl
-              position="bottomleft"
-              onCreated={_onCreated}
-              onDeleted={(e) => _onDeleted(e)}
-              onEdited={_onEdited}
-              draw={{
-                rectangle: false,
-                circle: false,
-                circlemarker: false,
-                marker: false,
-                polyline: false,
-                polygon: {
-                  showArea: false,
-                }
-              }}
-            />
-            }
+            )}
+            {isLoggedIn && (
+              <EditControl
+                position="bottomleft"
+                onCreated={_onCreated}
+                onDeleted={(e) => _onDeleted(e)}
+                onEdited={_onEdited}
+                draw={{
+                  rectangle: false,
+                  circle: false,
+                  circlemarker: false,
+                  marker: false,
+                  polyline: false,
+                  polygon: {
+                    showArea: false,
+                  },
+                }}
+              />
+            )}
           </FeatureGroup>
         </LayersControl.Overlay>
       </LayersControl>
       <ZoomControl position="bottomleft" />
-
     </MapContainer>
   );
-}
+};
 
 export default MapComponent;

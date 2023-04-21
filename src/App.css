@@ -1,5 +1,5 @@
 /* import leaflet.css */
-@import url('//unpkg.com/leaflet@1.7.1/dist/leaflet.css');
+@import url("//unpkg.com/leaflet@1.7.1/dist/leaflet.css");
 
 /* set the height of the map container to the full height of the viewport */
 /* .map-container {
@@ -7,82 +7,85 @@
 } */
 
 .map-container {
-  position: absolute;
-  top: 50px;
-  bottom: 0;
-  left: 0;
-  right: 0;
+    position: absolute;
+    top: 50px;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 
 /* remove margins and paddings from the body element */
 body {
-  margin: 0;
-  padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
 .tabs {
-  position: fixed; 
-  top: 60px; 
-  right: 10px; 
-  width: 300px; 
-  height: 85%; 
-  overflow-y: scroll; 
-  background-color: #9f9f9f; 
-  padding: 10px; 
-  z-index: 999;
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-  border-radius: 5px;
+    position: fixed;
+    top: 60px;
+    right: 10px;
+    width: 300px;
+    height: 85%;
+    overflow-y: scroll;
+    background-color: #9f9f9f;
+    padding: 10px;
+    z-index: 999;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    border-radius: 5px;
 }
 
 .posts {
-
 }
 
 .card {
-  border: 1px solid #94c5b1; 
-  border-radius: 5px; 
-  padding: 10px; 
-  margin: 10px 0;
+    border: 1px solid #94c5b1;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
 }
 
 /* login */
 
 .login {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
 }
 
 .login-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .field-name {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0;
 }
 
 .field-input {
-  padding: 10px;
-  margin: 5px 0;
-  border-radius: 5px;
-  border: 1px solid #ccc;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
 }
 
 .submit-button {
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 5px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+}
+
+.error {
+    color: #f03333;
 }

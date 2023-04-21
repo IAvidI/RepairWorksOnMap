@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { useState } from "react";
 
 import "./App.css";
@@ -21,7 +21,11 @@ const Posts = ({ cards, setCards }) => {
       return prevCards.map((card) => {
         if (card.id === id) {
           // If card id matches the id passed to handleSave, update properties and exit edit mode
-          return { ...card, properties: { ...card.properties, ...updatedProperties }, editing: false };
+          return {
+            ...card,
+            properties: { ...card.properties, ...updatedProperties },
+            editing: false,
+          };
         }
         return card;
       });
@@ -33,7 +37,10 @@ const Posts = ({ cards, setCards }) => {
       return prevCards.map((prevCard) => {
         if (prevCard.id === id) {
           // Update the specified property value in the card being edited
-          return { ...prevCard, properties: { ...prevCard.properties, [property]: value } };
+          return {
+            ...prevCard,
+            properties: { ...prevCard.properties, [property]: value },
+          };
         }
         return prevCard;
       });
@@ -88,7 +95,7 @@ const Posts = ({ cards, setCards }) => {
           responsiblePerson,
           tag,
         },
-        editing
+        editing,
       } = card;
       return (
         <div key={id} className="card">
@@ -102,7 +109,11 @@ const Posts = ({ cards, setCards }) => {
                   type="text"
                   value={expectedFinishDate}
                   onChange={(e) =>
-                    handlePropertyChange(id, "expectedFinishDate", e.target.value)
+                    handlePropertyChange(
+                      id,
+                      "expectedFinishDate",
+                      e.target.value
+                    )
                   }
                 />
               </p>
@@ -112,7 +123,11 @@ const Posts = ({ cards, setCards }) => {
                   type="text"
                   value={responsiblePerson}
                   onChange={(e) =>
-                    handlePropertyChange(id, "responsiblePerson", e.target.value)
+                    handlePropertyChange(
+                      id,
+                      "responsiblePerson",
+                      e.target.value
+                    )
                   }
                 />
               </p>
@@ -125,9 +140,12 @@ const Posts = ({ cards, setCards }) => {
                     handlePropertyChange(id, "tag", e.target.value)
                   }
                 />
-
               </p>
-              <button onClick={() => handleSave(id, { responsiblePerson, expectedFinishDate, tag })}>
+              <button
+                onClick={() =>
+                  handleSave(id, { responsiblePerson, expectedFinishDate, tag })
+                }
+              >
                 Save
               </button>
             </div>

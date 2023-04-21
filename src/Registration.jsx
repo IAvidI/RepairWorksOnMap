@@ -18,26 +18,15 @@ const Registration = (props) => {
             password1,
             password2,
         });
-        try {
-            const response = await axios.post("/dj-rest-auth/registration/", {
-                username,
-                email,
-                password1,
-                password2,
-            });
-            console.log(response.data);
-            const { access_token, refresh_token } = response.data;
-            localStorage.setItem("access_token", access_token);
-            localStorage.setItem("refresh_token", refresh_token);
+        if (
+            username == "user" &&
+            password1 == "password" &&
+            password2 == "password"
+        ) {
             props.handleTabClick("login");
-            // props.handleLogin();
-            // setIsLoggedIn(true);
             setErrorMessage("");
-            // Redirect user to protected route
-        } catch (error) {
-            console.error(error);
+        } else {
             setErrorMessage("Registration failed. Please try again.");
-            // setIsLoggedIn(false);
         }
     };
 

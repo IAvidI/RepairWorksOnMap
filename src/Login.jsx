@@ -11,29 +11,14 @@ const Login = (props) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         console.log("Submitting login form with:", { username, password });
-        try {
-            const response = await axios.post(
-                "http://localhost:5432/dj-rest-auth/login/",
-                {
-                    username,
-                    password,
-                }
-            );
-            console.log(response.data);
-            const { access_token, refresh_token } = response.data;
-            localStorage.setItem("access_token", access_token);
-            localStorage.setItem("refresh_token", refresh_token);
-            localStorage.setItem("token", token);
+        if (
+            (username == "admin" && password == "password") ||
+            (username == "user" && password == "password")
+        ) {
             props.handleLogin();
-            // setIsLoggedIn(true);
             setErrorMessage("");
-            // Redirect user to protected route
-        } catch (error) {
-            console.error(error);
-            setErrorMessage(
-                "Incorrect username or password. Please try again."
-            );
-            // setIsLoggedIn(false);
+        } else {
+            setErrorMessage("Login failed. Please try again.");
         }
     };
 
